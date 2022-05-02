@@ -43,7 +43,6 @@
 		</script>
 	</head>
 	<body>
-	<!-- ..................................................... ............-->
 		<div id="inicio">	
 			<div class="titulo">
 				<h1><em>I.E.S Luis Velez de Guevara</em></h1>
