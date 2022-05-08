@@ -1,0 +1,163 @@
+<?php
+	include "db_conn.php";
+?>
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>Matrícula - IES Luís Vélez de Guevara</title>
+		<link rel="stylesheet" type="text/css" href="css/styleind.css">
+		<link rel="stylesheet" type="text/css" href="css/stylemat.css">
+		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#menu").load("menu.html");
+				$("#pie").load("pie.html");
+			});
+		</script>
+		<script>
+			var medio=new Array("Atención a Personas en Situación de Dependencia (APSD)","Gestión Administrativa (GA)","Sistemas Microinformáticos y Redes (SMR)");
+			var superior=new Array("Administración y Finanzas (AF)","Administración de Sistemas Informáticos en Red (ASIR)","Desarrollo de Aplicaciones Web (DAW)(FP Dual)");
+
+			var todosCiclos = [
+				[],
+				medio,
+				superior,
+			];
+		
+			function cambia_ciclo(){
+				var grado 
+				grado = document.f1.grado[document.f1.grado.selectedIndex].value 
+				if (grado != 0) {
+					mis_ciclos=todosCiclos[grado]
+					num_ciclos = mis_ciclos.length
+					document.f1.ciclo.length = num_ciclos
+					for(i=0;i<num_ciclos;i++){ 
+						document.f1.ciclo.options[i].value=mis_ciclos[i] 
+						document.f1.ciclo.options[i].text=mis_ciclos[i] 
+					}
+				}else{
+					document.f1.ciclo.length = 1
+					document.f1.ciclo.options[0].value = "-" 
+					document.f1.ciclo.options[0].text = "-" 
+				}
+				document.f1.ciclo.options[0].selected = true 
+			}
+		</script>
+	</head>
+	<body>
+		<div id="inicio">	
+			<div class="titulo">
+				<h1><em>I.E.S Luis Velez de Guevara</em></h1>
+			</div>
+			<div class="logo">
+				<center><img src="img/watermark.svg" height="100px"></center>
+			</div>
+		</div>
+		<header id="menu"></header>
+		<br>
+		<div class="todofondo">
+			<h1>Sistema de Matriculación</h1>
+			<h3>Los campos marcados con el asterisco rojo (<span style="color: red"><b>*</b></span>) son OBLIGATORIOS</h3>
+			<div class="verificacion">
+				<form name="f1" action="registrar.php">
+					<center>
+						<table style="width:750px">
+					    	<th>DATOS DEL SOLICITANTE:</th>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Nombre:</td><td><input type="text" name="nombre" required /><br></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Primer apellido:</td><td><input type="text" name="primer_apellido" required /></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Segundo apellido:</td><td><input type="text"  name="segundo_apellido" required /></td>
+								</tr>
+								<tr>
+									<td>Sexo:</td>
+									<td>
+										<select name="sexo">
+											<option></option>
+											<option>Hombre</option>
+											<option>Mujer</option>
+											<option>Otro</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>DNI / NIE / Pasaporte:</td><td><input type="text" name="dni" required /></td>
+								</tr>
+								<tr>
+									<td>Nacionalidad:</td><td><input type="text" name="nacionalidad" /></td>
+								</tr>
+								<tr>
+									<td>Profesión / Situación profesional:</td><td><input type="text" name="situacion" /></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Fecha de Nacimiento:</td><td><input type="date" name="fecha_nacimiento" required /></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Localidad:</td><td><input type="text" name="localidad" required /><br></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Provincia:</td><td><input type="text" name="provincia" required /><br></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Código Postal:</td><td><input type="text" name="codigo_postal" required /><br></td>
+								</tr>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Domicilio:</td><td><input type="text" name="direccion" required /></td>
+								<tr>
+									<td><span style="color: red"><b>*</b></span>Correo electrónico:</td><td><input type="text"  name="correo_electronico" required /></td>
+								</tr>
+															
+							<th>DATOS DE MATRÍCULA:</th>
+							<tr>
+								<td><span style="color: red"><b>*</b></span>Grado:</td>
+								<td>
+									<select name="grado" onchange="cambia_ciclo()">
+									    <option value="0" disabled selected>Grado...
+			                        	<option value="1">Medio</option> 
+			                        	<option value="2">Superior</option>
+		                        	</select>
+		                        </td>
+		                        <tr>
+		                            <td><span style="color: red"><b>*</b></span>Ciclo Formativo:</td>
+		                            <td>
+		                        	<select name="ciclo"> 
+			                        	<option value="-" selected>Seleccione grado
+		                        	</select>
+		                        	</td>
+		                        </tr>
+							</tr>
+							<tr>
+								<td><span style="color: red"><b>*</b></span>Curso:</td>
+								<td>
+									<select name="curso">
+										<option>1</option>
+										<option>2</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><span style="color: red"><b>*</b></span>Jornada:</td>
+								<td>
+									<select name="jornada">
+										<option>Completa</option>
+										<option>Parcial</option>
+									</select>
+								</td>
+							</tr>
+							
+							<td><br><input type="submit" class="botonazul" value="Enviar"></td>
+						</table>
+					</center>
+				</form>
+			</div>
+			
+			<br><br><br>
+			
+		</div>
+		<footer id="pie"></footer>
+	</body>
+</html>
