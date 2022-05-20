@@ -92,7 +92,7 @@
 					if(isset($_POST['enviar'])){
 						$busqueda = $_POST['busqueda'];
 						$consulta = "SELECT * FROM alumno WHERE idAlumno LIKE '%$busqueda%'";
-						$sql2 = "SELECT * FROM matricula WHERE idAlumno LIKE '%$busqueda%'";
+						$sql2 = "SELECT * FROM Matricula WHERE idAlumno LIKE '%$busqueda%'";
 						$resultadoSql2 = mysqli_query($connection, $sql2);
 						$mostrar2 = mysqli_fetch_array($resultadoSql2);
 						$resultadoConsulta = mysqli_query($connection, $consulta);
@@ -122,9 +122,9 @@
 						<?php
 							}
 					}elseif(empty($_POST['enviar'])){
-					//$sql = "SELECT a.*, m.estado FROM alumno a, matricula m GROUP BY idAlumno";
+					//$sql = "SELECT a.*, m.estado FROM alumno a, Matricula m GROUP BY idAlumno";
 					$sql = "SELECT * FROM alumno GROUP BY idAlumno";
-					$sql2 = "SELECT estado FROM matricula GROUP BY idAlumno";
+					$sql2 = "SELECT estado FROM Matricula GROUP BY idAlumno";
 					$resultadoSql = mysqli_query($connection, $sql);
 					$resultadoSql2 = mysqli_query($connection, $sql2);
 					while($mostrar=mysqli_fetch_array($resultadoSql)){
