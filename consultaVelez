@@ -1,0 +1,1 @@
+SELECT alum.*, asig.* FROM alumno alum, alumno_asignatura alas, asignatura asig WHERE alum.idAlumno = alas.idAlumno AND alas.idAsignatura = asig.idAsignatura;
