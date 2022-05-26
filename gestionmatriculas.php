@@ -3,19 +3,17 @@
 	if (isset($_SESSION['id']) && isset($_SESSION['usuario'])) {
 		include "db_conn.php";
 ?>
+
 <!doctype html>
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
 		<title>IES Luís Vélez de Guevara</title>
-
 		<link rel="stylesheet" type="text/css" href="css/stylemat.css">
 		<link rel="stylesheet" type="text/css" href="css/styleind.css">
 		<link rel="stylesheet" type="text/css" href="css/fondo.css">
 		<link rel="stylesheet" type="text/css" href="css/tablas.css">
-		
 		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-
 		<script>
 				$(document).ready(function(){
 				$("#menu").load("menuAdmin.html");//cargando el menu en el header
@@ -47,10 +45,9 @@
 			<div class="titulo">
 				<h1><em>I.E.S Luis Velez de Guevara</em></h1>
 			</div>
-			
-				<div class="logo">
-					<center><img src="img/watermark.svg" height="100px"></center>
-				</div>
+			<div class="logo">
+				<center><img src="img/watermark.svg" height="100px"></center>
+			</div>
 		</div>
 		<?php
 			echo "<center>";
@@ -91,80 +88,71 @@
 				<?php
 					if(isset($_POST['enviar'])){
 						$busqueda = $_POST['busqueda'];
-						$consulta = "SELECT * FROM alumno WHERE idAlumno LIKE '%$busqueda%'";
-						$sql2 = "SELECT * FROM Matricula WHERE idAlumno LIKE '%$busqueda%'";
-						$resultadoSql2 = mysqli_query($connection, $sql2);
-						$mostrar2 = mysqli_fetch_array($resultadoSql2);
+						$consulta = "SELECT a.*, m.estado FROM alumno as a, matricula as m WHERE a.idAlumno = m.idAlumno AND a.idAlumno LIKE '%$busqueda%'";
 						$resultadoConsulta = mysqli_query($connection, $consulta);
 						while($mostrar=mysqli_fetch_array($resultadoConsulta)){
 				?>
-					<tr>
-						<td><?php echo $mostrar['idAlumno'] ?></td>
-						<td><?php echo ''. $mostrar['apellido1'].' '.$mostrar['apellido2'] ?></td>
-						<td><?php echo $mostrar['nombre'] ?></td>
-						<td><?php echo $mostrar['fecNacimiento'] ?></td>
-						<td><?php echo $mostrar['sexo'] ?></td>
-						<td><?php echo $mostrar['correo'] ?></td>
-						<td><?php echo $mostrar['nacionalidad'] ?></td>
-						<td><?php echo $mostrar['cp'] ?></td>
-						<td><?php echo $mostrar['direccion'] ?></td>
-						<td><?php echo $mostrar2['estado'] ?></td>
-						<td>
-							<a href="aprobar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer aprobar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
-								<img alt="tick" src="img/tick.png" width="80" height="70">
-							</a>
-						</td>
-						<td>
-							<a href="borrar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer eliminar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
-								<img alt="x" src="img/x.webp" width="80" height="70">
-							</a>
-						</td>
-						<?php
-							}
-					}elseif(empty($_POST['enviar'])){
-					//$sql = "SELECT a.*, m.estado FROM alumno a, Matricula m GROUP BY idAlumno";
-					$sql = "SELECT * FROM alumno GROUP BY idAlumno";
-					$sql2 = "SELECT estado FROM Matricula GROUP BY idAlumno";
-					$resultadoSql = mysqli_query($connection, $sql);
-					$resultadoSql2 = mysqli_query($connection, $sql2);
-					while($mostrar=mysqli_fetch_array($resultadoSql)){
-						$mostrar2=mysqli_fetch_array($resultadoSql2)
-				?>
-					<tr>
-						<td><?php echo $mostrar['idAlumno'] ?></td>
-						<td><?php echo ''. $mostrar['apellido1'].' '.$mostrar['apellido2'] ?></td>
-						<td><?php echo $mostrar['nombre'] ?></td>
-						<td><?php echo $mostrar['fecNacimiento'] ?></td>
-						<td><?php echo $mostrar['sexo'] ?></td>
-						<td><?php echo $mostrar['correo'] ?></td>
-						<td><?php echo $mostrar['nacionalidad'] ?></td>
-						<td><?php echo $mostrar['cp'] ?></td>
-						<td><?php echo $mostrar['direccion'] ?></td>
-						<td><?php echo $mostrar2['estado'] ?></td>
-						<td>
-							<a href="aprobar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer aprobar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
-								<img alt="tick" src="img/tick.png" width="80" height="70">
-							</a>
-						</td>
-						<td>
-							<a href="borrar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer eliminar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
-								<img alt="x" src="img/x.webp" width="80" height="70">
-							</a>
-						</td>
-						<?php
-							}}
-						?>
-						
-					</tr>
+				<tr>
+					<td><?php echo $mostrar['idAlumno'] ?></td>
+					<td><?php echo ''. $mostrar['apellido1'].' '.$mostrar['apellido2'] ?></td>
+					<td><?php echo $mostrar['nombre'] ?></td>
+					<td><?php echo $mostrar['fecNacimiento'] ?></td>
+					<td><?php echo $mostrar['sexo'] ?></td>
+					<td><?php echo $mostrar['correo'] ?></td>
+					<td><?php echo $mostrar['nacionalidad'] ?></td>
+					<td><?php echo $mostrar['cp'] ?></td>
+					<td><?php echo $mostrar['direccion'] ?></td>
+					<td><?php echo $mostrar['estado'] ?></td>
+					<td>
+						<a href="aprobar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer aprobar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
+							<img alt="tick" src="img/tick.png" width="80" height="70">
+						</a>
+					</td>
+					<td>
+						<a href="borrar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer eliminar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
+							<img alt="x" src="img/x.webp" width="80" height="70">
+						</a>
+					</td>
+					<?php
+						}
+						}elseif(empty($_POST['enviar'])){
+							$sql = "SELECT a.*, m.estado FROM alumno as a, matricula as m WHERE a.idAlumno = m.idAlumno";
+							$resultadoSql = mysqli_query($connection, $sql);
+							while($mostrar=mysqli_fetch_array($resultadoSql)){
+								
+					?>
+				<tr>
+					<td><?php echo $mostrar['idAlumno'] ?></td>
+					<td><?php echo ''. $mostrar['apellido1'].' '.$mostrar['apellido2'] ?></td>
+					<td><?php echo $mostrar['nombre'] ?></td>
+					<td><?php echo $mostrar['fecNacimiento'] ?></td>
+					<td><?php echo $mostrar['sexo'] ?></td>
+					<td><?php echo $mostrar['correo'] ?></td>
+					<td><?php echo $mostrar['nacionalidad'] ?></td>
+					<td><?php echo $mostrar['cp'] ?></td>
+					<td><?php echo $mostrar['direccion'] ?></td>
+					<td><?php echo $mostrar['estado'] ?></td>
+					<td>
+						<a href="aprobar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer aprobar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
+							<img alt="tick" src="img/tick.png" width="80" height="70">
+						</a>
+					</td>
+					<td>
+						<a href="borrar.php?idAlumno=<?php echo $mostrar['idAlumno']; ?>" onclick="return confirm('¿Está seguro de querer eliminar el registro con DNI <?php echo $mostrar['idAlumno'];?>?')">
+							<img alt="x" src="img/x.webp" width="80" height="70">
+						</a>
+					</td>
+					<?php
+						}}
+					?>
+				</tr>
 		</table>
 	<center>
-
 	<footer id="pie"></footer>
-	
 	</body>
 	<?php 
 		}else{
-				header("Location: iniciosesion.php?error=Debe iniciar sesión");
+			header("Location: iniciosesion.php?error=Debe iniciar sesión");
 		}
 	?>
 </html>
